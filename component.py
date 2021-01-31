@@ -24,7 +24,7 @@ search_part = search_part.upper()
 dims = re.compile(r'(\d+\.*?\d*?(mm)*?\s*?x*?\d+\.*?\d*?(mm)*?\s+?x+?.+mm+)', flags=re.I)
 
 # Connection info
-conx_string = 'DRIVER={SQL Server};SERVER=NMC-JAV; DATABASE=Javelin19r1_Live; '
+conx_string = 'DRIVER={SQL Server};SERVER=XXX-XXX; DATABASE=XXXYYY; '
 'TRUSTED CONNECTION=yes'
 
 # SQL query
