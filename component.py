@@ -20,7 +20,7 @@ cus_no = cus_no.upper()
 search_part = input('Enter raw material:\n')
 search_part = search_part.upper()
 
-# dims = re.compile(r'(\d*\.?\d*?\s?x\s?){,3}')
+# Regex search to extract dimensions from sales text
 dims = re.compile(r'(\d+\.*?\d*?(mm)*?\s*?x*?\d+\.*?\d*?(mm)*?\s+?x+?.+mm+)', flags=re.I)
 
 # Connection info
