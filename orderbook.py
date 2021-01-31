@@ -14,9 +14,9 @@ np.set_printoptions(linewidth=desired_width)
 pd.set_option('display.max_columns', 10)
 
 # Define variables and empty lists
-customerdict = {'&CDADDER': ['SAFRAN', 'SAFRANOB.xlsx'], 'AIMAVIAT': ['AIM', 'AIMOB.xlsx']}  #default customer variables
-col_no_dict = {'AIMAVIAT': [12, 16], '&CDADDER': [10, 13]}  # orderbook date column and output date column
-date_dict = {'AIMAVIAT': '%d/%m/%Y %H:%M:%S', '&CDADDER': '%m/%d/%y'}  # default customer date formats - note can vary
+customerdict = {'Customer1': ['Cus1', 'Cus1NOB.xlsx'], 'Customer2': ['cus2', 'cus2OB.xlsx']}  #default customer variables
+col_no_dict = {'Customer1': [12, 16], 'Customer2': [10, 13]}  # orderbook date column and output date column
+date_dict = {'Cus1': '%d/%m/%Y %H:%M:%S', 'Cus2': '%m/%d/%y'}  # default customer date formats - note can vary
 
 # Parsing user input for customer account no
 while True:
@@ -40,7 +40,7 @@ po_line = {}
 nan = [] # blank list for orderbook lines that are not in javelin
 
 # SQL connection and queries
-conx_string = 'DRIVER={SQL Server};SERVER=NMC-JAV; DATABASE=Javelin19r1_Live; '
+conx_string = 'DRIVER={SQL Server};SERVER=XXX-XXX; DATABASE=XXXYYY; '
 'TRUSTED CONNECTION=yes'
 query = "SELECT Del_Note_Detail.Del_Note_No, Del_Note_Detail.SO_No, " \
         "CONCAT(Del_Note_Detail.SO_No, '/', Del_Note_Detail.SO_Line_No) AS Concat," \
@@ -69,7 +69,6 @@ df = df[df['Text'].str.contains(re.compile(r'\d{7,}'))]
 df = df.drop_duplicates(subset="Concat", keep='first')
 
 
-
 # Combining dataframes from SQL queries
 df_comb = df2.merge(df, left_on="C1", right_on="Concat", how='left')
 df_comb['clean_date'] = df_comb['Promise_Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
@@ -88,7 +87,7 @@ for i in range(2, sheet.max_row+1):
         date_obj = datetime.strptime(date, '{}'.format(date_dict[cus_no])).date()
     else:
         date = datetime.strftime(date, '%d/%m/%y')
-        date_obj = datetime.strptime(date, '%m/%d/%y')     # Note Safran has varied this format
+        date_obj = datetime.strptime(date, '%m/%d/%y')     
     po_line[a] = []
     po_line[a].append(date_obj)
 
