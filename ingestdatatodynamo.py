@@ -54,8 +54,8 @@ class IngestData:
 if __name__ == '__main__':
     os.environ['AWS_DEFAULT_REGION'] = 'eu-west-2'
     table_name = 'transaction'
-    aws_access_key_id = 'AKIAXFW6DWJAWIPZPBET'
-    aws_secret_access_key = '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'
+    aws_access_key_id = 'xx'
+    aws_secret_access_key = 'xx'
     file = 'data.json'
     key = 'transactions'
 
