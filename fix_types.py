@@ -11,7 +11,7 @@ log_file_path = path.join(path.dirname(path.abspath(__file__)), 'logging_config.
 fileConfig(log_file_path)
 
 from decorators.timer_decorator import timer_decorator
-from prefix_lists.porsche_prefixes import porsche
+from prefix_lists.xxx_prefixes import xxx
 
 class FixTypes:
     """Build a data_types config file by concatenating random data and inferring types"""
@@ -210,9 +210,9 @@ class FixTypes:
 if __name__ == '__main__':
     # Note that you can import a list of prefixes and put the below into a loop
     # Increasing days to process increases chances of catching rogue string cols
-    obj_args = {'prefix': 'adveritydata/dfa/dcm_all_porsche/',
-                'bucket': 'omg-phd-porsche-data-stg',
-                'data_source': 'dcm',
+    obj_args = {'prefix': 'xxx',
+                'bucket': 'xxx',
+                'data_source': 'xxx',
                 'days_to_process': 1}
     fixtypes = FixTypes(**obj_args)
     fixtypes.main()
