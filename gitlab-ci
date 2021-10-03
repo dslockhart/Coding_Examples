@@ -1,0 +1,53 @@
+image: python:3.8
+
+stages:
+  - test-job
+  - publish
+
+variables:
+  DOCKER_REGISTRY: xxx.dkr.ecr.eu-west-1.amazonaws.com
+  AWS_DEFAULT_REGION: eu-west-1
+  APP_NAME: xxx
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://100.96.94.24:2375
+
+before_script:
+  - echo $CI_COMMIT_TAG
+  - pip install -r requirements.txt
+  - python -V
+  - apt-get update
+    - amazon-linux-extras install docker
+    - aws --version
+    - docker --version
+    - pip install requirements.txt
+
+test-job:
+  stage: test-job
+  script:
+    - pytest --junitxml=report.xml
+    - python -m pytest --cov=.
+    - coverage report
+    - coverage xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
+
+publish:
+  stage: publish
+  only:
+    refs:
+      - main
+  tags: [gitlab-runner]
+  image:
+    name: amazon/aws-cli
+    entrypoint: [""]
+  before_script:
+    - amazon-linux-extras install docker
+    - aws --version
+    - docker --version
+  script:
+    - docker build -t $DOCKER_REGISTRY/$APP_NAME:latest . --no-cache
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$APP_NAME:latest
