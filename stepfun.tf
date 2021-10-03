@@ -11,16 +11,16 @@ resource "aws_sfn_state_machine" "step_func_state_mach" {
       "Resource": "arn:aws:states:::ecs:runTask.waitForTaskToken",
       "Parameters": {
         "LaunchType": "FARGATE",
-        "Cluster": "arn:aws:ecs:eu-west-1:721020130582:cluster/vw-phd-fargate-cluster",
-        "TaskDefinition": "arn:aws:ecs:eu-west-1:721020130582:task-definition/${var.container_name}:1",
+        "Cluster": "arn:aws:ecs:eu-west-1:xxx:cluster/xxx",
+        "TaskDefinition": "arn:aws:ecs:eu-west-1:xxx:task-definition/${var.container_name}:1",
         "NetworkConfiguration": {
           "AwsvpcConfiguration": {
             "Subnets": [
-              "subnet-0c8eb1f438c99317f",
-              "subnet-02e7c55b61acb412e"
+              "subnet-xxx",
+              "subnet-xxx"
             ],
             "SecurityGroups": [
-              "sg-018ec2f502076840a"
+              "sg-xxx"
             ],
             "AssignPublicIp": "DISABLED"
           }
@@ -70,7 +70,7 @@ resource "aws_sfn_state_machine" "step_func_state_mach" {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:eu-west-1:721020130582:function:pipelines_notification:$LATEST",
+        "FunctionName": "arn:aws:lambda:eu-west-1:xxx:function:pipelines_notification:$LATEST",
         "Payload": {
           "msg.$": "$"
         }
@@ -81,7 +81,7 @@ resource "aws_sfn_state_machine" "step_func_state_mach" {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:eu-west-1:721020130582:function:pipelines_notification:$LATEST",
+        "FunctionName": "arn:aws:lambda:eu-west-1:xxx:function:pipelines_notification:$LATEST",
         "Payload": {
           "msg": "${var.api_name}  pipeline has failed, details have been sent by email"
         }
@@ -95,7 +95,7 @@ resource "aws_sfn_state_machine" "step_func_state_mach" {
         "Message": {
           "Message.$": "$.Cause"
         },
-        "TopicArn": "arn:aws:sns:eu-west-1:721020130582:phd-data-pipelines-failure"
+        "TopicArn": "arn:aws:sns:eu-west-1:xxx:phd-data-pipelines-failure"
       },
       "Next": "Lambda (Notification Failure)"
     },
